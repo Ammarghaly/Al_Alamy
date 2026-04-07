@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مطعم العالمي - القائمة الرقمية</title>
+    
+    <!-- Meta Tags -->
+    <meta name="description" content="منيو مطعم العالمي - أفضل الكريبات والحواوشي والوجبات في مسجد أم القرى. جودة عالية وطعم لا يقاوم.">
+    <meta name="theme-color" content="#b22222">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW Registered'))
+                    .catch(err => console.log('SW Failed', err));
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="loader" class="loader-overlay">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <div id="globalOverlay" class="global-overlay"></div>
+
+    <header class="hero-section">
+        <div class="hero-overlay"></div>
+        
+        <!-- Top Info Bar -->
+        <div class="top-info-bar">
+            <span class="info-item">
+                <i class="fas fa-location-dot"></i> مسجد أم القرى
+            </span>
+            <a href="tel:01093377644" class="info-item">
+                <i class="fas fa-phone"></i> 01093377644
+            </a>
+        </div>
+
+        <div class="hero-content">
+            <div class="logo-container">
+                <img src="logo_modern.png" alt="Logo" class="restaurant-logo">
+            </div>
+            <h1 class="restaurant-name">مطعم العالمي</h1>
+            <p class="tagline">أصل الطعم والجودة</p>
+            
+            <div class="search-container">
+                <input type="text" id="menuSearch" placeholder="ابحث عن وجبتك المفضلة...">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+    </header>
+
+    <main class="menu-container">
+        <section id="menuAccordion" class="accordion-list">
+            <!-- Dynamic Category Tiles will be injected here -->
+        </section>
+    </main>
+
+    <!-- Cart Floating Button -->
+    <div id="cartToggle" class="cart-trigger">
+        <div class="cart-icon-wrapper">
+            <i class="fas fa-shopping-bag"></i>
+            <span id="cartCount">0</span>
+        </div>
+    </div>
+
+    <!-- Details/Modifier Modal -->
+    <div id="modifierModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">اسم الوجبة</h3>
+                <button class="close-modal-btn" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="priceOptions" class="option-group">
+                    <!-- Size labels if applicable -->
+                </div>
+                <div class="option-group">
+                    <label>إضافات اختيارية</label>
+                    <div id="globalExtras" class="extras-grid">
+                        <!-- Extras like Cheese/Potato -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="addToCartBtn" class="btn-primary">إضافة للسلة</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Drawer -->
+    <div id="cartDrawer" class="drawer">
+        <div class="drawer-header">
+            <h3>سلة المشتريات</h3>
+            <button class="close-drawer-btn" aria-label="Back">
+                <i class="fas fa-chevron-left"></i> رجوع للطلب
+            </button>
+        </div>
+        <div id="cartItems" class="cart-items-list">
+            <!-- Cart items -->
+        </div>
+        <div class="cart-summary">
+            <div class="summary-line">
+                <span>الإجمالي:</span>
+                <span id="cartTotal">0.00 ج.م</span>
+            </div>
+            <button id="checkoutBtn" class="checkout-button">
+                إرسال الطلب <i class="fab fa-whatsapp"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Checkout Information Modal -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>بيانات العميل</h3>
+                <button class="close-checkout-modal-btn" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group-modern">
+                    <label>الاسم</label>
+                    <input type="text" id="custName" placeholder="اكتب اسمك هنا...">
+                </div>
+                <div class="input-group-modern">
+                    <label>العنوان بالكامل</label>
+                    <textarea id="custAddress" placeholder="المنطقة، الشارع، علامة مميزة..."></textarea>
+                </div>
+                <div class="input-group-modern">
+                    <label>ملاحظات إضافية</label>
+                    <input type="text" id="custNotes" placeholder="بدون بصل، زيادة عيش...">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="finalConfirmBtn" class="btn-whatsapp">
+                    تأكيد وإرسال للواتساب <i class="fab fa-whatsapp"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

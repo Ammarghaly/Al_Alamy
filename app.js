@@ -403,8 +403,13 @@ finalConfirmBtn.onclick = () => {
     message += `==========================\n`;
     message += `\n*شكراً لاختياركم مطعم العالمي!* ✨`;
 
-    const whatsappUrl = `https://wa.me/${menuData.phone}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+    let cleanPhone = menuData.phone.replace(/\D/g, '');
+    if (cleanPhone.startsWith('0')) {
+        cleanPhone = '20' + cleanPhone.substring(1);
+    }
+
+    const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
+    window.location.href = whatsappUrl;
     
     cart = [];
     saveCart();
